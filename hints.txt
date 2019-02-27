@@ -1,0 +1,14 @@
+1. Training longer and longer may lead to continual improvement in the training loss, but the model's accuracy on the test dataset will plateau not long after the validation and training loss start to diverge.
+
+2. Smaller batches actually train faster at first, because there are more iterations per epoch (the number of batches per epoch is inversely related to the batch size). However, this does not translate into long-term improvement, because updating on fewer examples causes more fluctuations in the model's weights. Increasing the learning rate can also lead to the same sort of behavior. Too small of a learning rate might make the training take too long, also.
+
+3. A & B. These can all yield accuracy improvements, though no single one is usually going to cut the number of misses on the test set down by more than a third or so.
+C. Batchnorm and dropout increase the training time a LOT. These can also lead to marginal improvements in the long run, however.
+
+4. Typically, the absolute number of errors will stay roughly constant, even as the class size is shrunk significantly. This means the relative error is increasing, though. If the number of errors were larger to start with, we might expect this to scale with sqrt(N).
+
+5. With the initial dataset, removing the weights doesn't have too much of an effect -- the classes are still fairly balanced. If we combine with #4 and remove even more of 1 class, we can start to see a further increase in relative error. However, even with as few as 100 images, the model still manages to acheive a reasonably high accuracy on that class. This is encouraging news for medical imaging datasets, which are often smaller than those in other deep learning applications. If we use custom weights and make one class much more valuable than the others, we do see a bias toward our model choosing this class even when it shouldn't. Making one class weighted 20 times as much as another is enough to generate 40 or 50 misclassifications in this dataset.
+
+6. In this model, removing the transformations has an effect on the first epoch or two. Again, this is more of an issue with more complex datasets and larger architectures.
+
+7. Fewer than 10 is possible -- 9 is the record as of this writing. Under 15 is certainly good.
