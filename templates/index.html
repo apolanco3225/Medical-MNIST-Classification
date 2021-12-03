@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Jarvis Health IA</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  </head>
+  <style>
+        html, body {
+        min-height: 100%;
+        padding: 0;
+        margin: 0;
+        font-family: Roboto, Arial, sans-serif;
+        font-size: 18px;
+        color: #666;
+        }
+        b {
+        margin: 0;
+        margin-bottom: 10px;
+        background-color: #1c87c9;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        display:block;
+        }
+        .main-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #666;
+        }
+        .container {
+        margin: 25px;
+        box-shadow: 0 2px 5px #555; 
+        background: #f5f5f5; 
+        }
+        form{
+        margin:25px;
+        margin-top: 10px;
+        }
+        .submit {
+        width: 100%;
+        margin-top: 10px;
+        padding: 10px;
+        border: none;
+        background: #1c87c9; 
+        font-size: 18px;
+        font-weight: 400;
+        color: #fff;
+        }
+        .submit:hover {
+        background: #2371a0;
+        }
+        #file-upload{
+        width: calc(100% - 20px);
+        font-size: 18px;
+        padding: 10px;
+        background-color: #ddd;
+        }
+        .results {
+        width:50%;
+        box-shadow: 0 2px 5px #666;
+        background: #f5f5f5;
+        text-align: center;
+        vertical-align: middle;
+        border-collapse: collapse;
+        }
+        td{
+        padding:10px;
+        }
+        th{
+        padding: 10px;
+        margin: 10px;
+        background-color: #1c87c9;
+        color: #fff;
+        }
+        tr:nth-child(even){
+        background-color: #e2e2e2;
+        }
+        tr:hover{
+        background-color: #dde;
+        }
+        img{
+          width: 100%;
+        }
+  </style>
+  <body>
+    <div class="main-block">
+      <div class="container">
+        <b>Load images</b>
+        <form action="/" method="POST" enctype="multipart/form-data">
+          <input id="file-upload" type="file" name="image" required multiple></input>
+          <input class="submit"type="submit"></button>
+        </form>
+      </div>
+      {% if request.method == 'POST' %}
+      <table class="results">
+        <thead>
+          <th>Image</th>
+          <th>File name</th>
+          <th>Prediction</th>
+        </thead>
+          {% for image in image_list %}
+          <tr>
+              <td>
+                <img src="data:image/jpeg;base64,{{image['image_data']}}"/>
+              <td>
+                <div class="file-name">{{image["image_name"]}}</div>
+              </td>
+              <td>
+                <div class="pred">{{image["image_pred"]}}</div>
+              </td>
+          </tr>
+          {% endfor %}
+      </table>
+      {%endif%}
+    </div>
+  </body>
+</html>
